@@ -1,0 +1,110 @@
+[9.146s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'list', '-p', '--base-paths', '/home/m2/dev_ws/src/spot_esp/spot_esp_files']
+[9.147s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='list', build_base='build', ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['/home/m2/dev_ws/src/spot_esp/spot_esp_files'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], topological_order=False, names_only=False, paths_only=True, topological_graph=False, topological_graph_dot=False, topological_graph_density=False, topological_graph_legend=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff903ff880>, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0xffff908bfc10>, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0xffff908bfc10>>)
+[9.596s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[9.596s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[9.596s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[9.596s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[9.596s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[9.597s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/m2/dev_ws/src/spot_esp/spot_esp_files'
+[9.598s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['ignore', 'ignore_ament_install']
+[9.598s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'ignore'
+[9.598s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'ignore_ament_install'
+[9.599s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['colcon_pkg']
+[9.599s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'colcon_pkg'
+[9.599s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['colcon_meta']
+[9.599s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'colcon_meta'
+[9.599s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['ros']
+[9.600s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'ros'
+[9.645s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['cmake', 'python']
+[9.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'cmake'
+[9.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'python'
+[9.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extensions ['python_setup_py']
+[9.646s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files) by extension 'python_setup_py'
+[9.647s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['ignore', 'ignore_ament_install']
+[9.647s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'ignore'
+[9.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'ignore_ament_install'
+[9.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['colcon_pkg']
+[9.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'colcon_pkg'
+[9.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['colcon_meta']
+[9.648s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'colcon_meta'
+[9.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['ros']
+[9.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'ros'
+[9.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['cmake', 'python']
+[9.649s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'cmake'
+[9.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'python'
+[9.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extensions ['python_setup_py']
+[9.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_KinematicYT) by extension 'python_setup_py'
+[9.650s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['ignore', 'ignore_ament_install']
+[9.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'ignore'
+[9.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'ignore_ament_install'
+[9.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['colcon_pkg']
+[9.651s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'colcon_pkg'
+[9.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['colcon_meta']
+[9.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'colcon_meta'
+[9.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['ros']
+[9.652s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'ros'
+[9.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['cmake', 'python']
+[9.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'cmake'
+[9.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'python'
+[9.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extensions ['python_setup_py']
+[9.653s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA) by extension 'python_setup_py'
+[9.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['ignore', 'ignore_ament_install']
+[9.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'ignore'
+[9.654s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'ignore_ament_install'
+[9.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['colcon_pkg']
+[9.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'colcon_pkg'
+[9.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['colcon_meta']
+[9.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'colcon_meta'
+[9.655s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['ros']
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'ros'
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['cmake', 'python']
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'cmake'
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'python'
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extensions ['python_setup_py']
+[9.656s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_PCA_2) by extension 'python_setup_py'
+[9.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['ignore', 'ignore_ament_install']
+[9.657s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'ignore'
+[9.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'ignore_ament_install'
+[9.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['colcon_pkg']
+[9.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'colcon_pkg'
+[9.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['colcon_meta']
+[9.658s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'colcon_meta'
+[9.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['ros']
+[9.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'ros'
+[9.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['cmake', 'python']
+[9.659s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'cmake'
+[9.660s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'python'
+[9.660s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extensions ['python_setup_py']
+[9.660s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/First_Test_RGB_IMU_OLED) by extension 'python_setup_py'
+[9.660s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['ignore', 'ignore_ament_install']
+[9.661s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'ignore'
+[9.661s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'ignore_ament_install'
+[9.661s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['colcon_pkg']
+[9.661s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'colcon_pkg'
+[9.661s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['colcon_meta']
+[9.662s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'colcon_meta'
+[9.662s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['ros']
+[9.662s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'ros'
+[9.662s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['cmake', 'python']
+[9.662s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'cmake'
+[9.663s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'python'
+[9.663s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extensions ['python_setup_py']
+[9.663s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/Inverse_Kinematics_PCA) by extension 'python_setup_py'
+[9.664s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/log) by extensions ['ignore', 'ignore_ament_install']
+[9.664s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/log) by extension 'ignore'
+[9.664s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/log) ignored
+[9.665s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['ignore', 'ignore_ament_install']
+[9.665s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'ignore'
+[9.665s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'ignore_ament_install'
+[9.666s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['colcon_pkg']
+[9.666s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'colcon_pkg'
+[9.666s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['colcon_meta']
+[9.666s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'colcon_meta'
+[9.666s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['ros']
+[9.667s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'ros'
+[9.667s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['cmake', 'python']
+[9.667s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'cmake'
+[9.667s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'python'
+[9.667s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extensions ['python_setup_py']
+[9.668s] Level 1:colcon.colcon_core.package_identification:_identify(/home/m2/dev_ws/src/spot_esp/spot_esp_files/ultrasonicX5) by extension 'python_setup_py'
+[9.668s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults

@@ -1,0 +1,17 @@
+{
+    "ros.distro": "humble",
+    "python.autoComplete.extraPaths": [
+        "/home/m2/dev_ws/install/rc_control/lib/python3.10/site-packages",
+        "/home/m2/dev_ws/install/my_interfaces/local/lib/python3.10/dist-packages",
+        "/home/m2/dev_ws/install/button_tester/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/m2/dev_ws/install/rc_control/lib/python3.10/site-packages",
+        "/home/m2/dev_ws/install/my_interfaces/local/lib/python3.10/dist-packages",
+        "/home/m2/dev_ws/install/button_tester/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
