@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="spot_quadruped">
 
+    <xacro:include filename="material.xacro"/>
+
 
     <xacro:property name="body_length" value="0.22"/>
     <xacro:property name="body_width" value="0.12"/>
@@ -19,27 +21,7 @@
     <xacro:property name="fuss_height" value="0.03"/>
     <xacro:property name="fuss_ballen" value="0.015"/>
     
-
-
-    <material name="black">
-        <color rgba=" 0 0 0 1"/>
-    </material>
-
-    <material name="green">
-        <color rgba=" 0 1 0 1"/>
-    </material>
-
-    <material name="blue">
-        <color rgba=" 0 0 1 1"/>
-    </material>
-
-    <material name="red">
-        <color rgba=" 1 0 0 1"/>
-    </material>
-
-    <material name="white">
-        <color rgba=" 1 1 1 1"/>
-    </material>
+   
 
     <link name="base_footprint"/>
 
@@ -52,6 +34,15 @@
             </geometry>    
             <material name="black"/> 
         </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${body_width/2}" rpy="0.0 ${pi/2} 0.0 "/>
+            <geometry>
+                <cylinder radius="${body_height/2}" length="${body_length}"/>
+                <!--<box size="${body_length} ${body_width} ${body_height}"/> -->
+            </geometry> 
+        </collision>
+        <xacro:cylinder_inertia m="0.5" r="${body_height/2}" h="${body_length}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
 
     </link>
 
@@ -69,9 +60,16 @@
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <box size="${shoulder_length} ${shoulder_width} ${shoulder_height}"/>
-            </geometry>           
-
+            </geometry>  
         </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${shoulder_length} ${shoulder_width} ${shoulder_height}"/>
+            </geometry> 
+        </collision> 
+        <xacro:box_inertia m="0.1" l="${shoulder_length}" w="${shoulder_width}" h="${shoulder_height}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
 
     </link>
 
@@ -94,6 +92,14 @@
             </geometry>            
             <material name="white"/>
         </visual>
+        <collision>
+            <origin xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${bein_length}  ${bein_width} ${bein_height}"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertia m="0.1" l="${bein_length}" w="${bein_width}" h="${bein_height}"
+                           xyz="0 0 0" rpy="0 0 0"/>
 
     </link>
 
@@ -115,6 +121,14 @@
             </geometry>     
             <material name="black"/>       
         </visual>
+        <collision>
+            <origin xyz="0.055 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${fuss_length}  ${fuss_width} ${fuss_height}"/>
+            </geometry> 
+        </collision>
+        <xacro:box_inertia m="0.1" l="${fuss_length}" w="${fuss_width}" h="${fuss_height}"
+                           xyz="0 0 0" rpy="0 0 0"/>
 
     </link>
 
@@ -138,6 +152,14 @@
             </geometry>     
             <material name="black"/>       
         </visual>
+        <collision>
+            <origin xyz="-0.015 0.0 0.0" rpy="${pi/2} 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${fuss_ballen}" length="${fuss_width}"/>
+            </geometry> 
+        </collision>
+        <xacro:cylinder_inertia m="0.01" r="${fuss_ballen}" h="${fuss_width}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
 
     </link>
 
