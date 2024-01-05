@@ -54,7 +54,7 @@ class Control:
             file2.write('\n')
         file2.close()
         
-    def coordinateToAngle(self,x,y,z,l1=23,l2=55,l3=55):
+    def coordinateToAngle(self,x,y,z,l1=10,l2=111.126,l3=120):     # 23  55  55
         a=math.pi/2-math.atan2(z,y)
         x_3=0
         x_4=l1*math.sin(a)
@@ -69,7 +69,7 @@ class Control:
         c=round(math.degrees(c))
         return a,b,c
     
-    def angleToCoordinate(self,a,b,c,l1=23,l2=55,l3=55):
+    def angleToCoordinate(self,a,b,c,l1=10,l2=111.126,l3=120):     # 23  55  55
         a=math.pi/180*a
         b=math.pi/180*b
         c=math.pi/180*c
