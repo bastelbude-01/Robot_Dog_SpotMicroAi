@@ -303,7 +303,7 @@ void rgb_cmdvel_callback(const void *msgin) {
 
 void setup() {
   // set_microros_transports();
-  set_microros_wifi_transports("FRITZ!Box 7490", "54908635459129454475", "192.168.178.86", 8868);
+  set_microros_wifi_transports(YOUR ROUTER, YOUR PASSWORD, ROUTER IP , PORT);
   pinMode(RH_RGB_ROT_PIN, OUTPUT);
   pinMode(RH_RGB_GRUEN_PIN, OUTPUT);
   pinMode(RH_RGB_BLAU_PIN, OUTPUT);
