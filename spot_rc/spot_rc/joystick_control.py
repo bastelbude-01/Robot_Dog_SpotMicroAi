@@ -9,7 +9,7 @@ control = Control()
 class DogCommands(Node):
     def __init__(self):
         super().__init__('dog_commands')
-        self.subscriptions = self.create_subscription(Twist, '/cmd_vel', self.dog_callback, 10)
+        self.subscriptions = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
 
     def dog_callback(self, msg):
         x = msg.linar.x
