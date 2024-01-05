@@ -4,7 +4,7 @@ from geometry_msgs.msg import Twist
 
 from Control import *
 
-
+control = Control()
 
 class DogCommands(Node):
     def __init__(self):
@@ -16,7 +16,15 @@ class DogCommands(Node):
         y = msg.angular.z
         
         if x >= 0.3:
-            control.forward()
+            control.forWard()
+        if x <= -0.3:
+            control.backWard()
+        if y >=0.3:
+            control.turnLeft()
+        if y <= -0.3:
+            control.turnRight()
+        if x == 0.0 and y == 0.0:
+            control.relax()
 
 
 def main(args=Node):
