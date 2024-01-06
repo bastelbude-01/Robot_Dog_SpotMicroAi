@@ -11,6 +11,31 @@ import numpy as np
 from mpu6050 import mpu6050
 
 
+
+control = Control()
+cmd = COMMAND()
+
+class DogCommands(Node):
+    def __init__(self):
+        super().__init__('dog_commands')
+        self.subscriptions = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
+
+    def dog_callback(self, msg):
+        x = msg.linar.x
+        y = msg.angular.z
+        
+        if x >= 0.3:
+            control.forWard()
+        if x <= -0.3:
+            control.backWard()
+        if y >=0.3:
+            control.turnLeft()
+        if y <= -0.3:
+            control.turnRight()
+        if x == 0.0 and y == 0.0:
+            control.relax()
+
+
 class COMMAND:
     CMD_MOVE_STOP = "CMD_MOVE_STOP"
     CMD_MOVE_FORWARD = "CMD_MOVE_FORWARD" 
@@ -32,10 +57,9 @@ class COMMAND:
     CMD_ATTITUDE = "CMD_ATTITUDE"
     CMD_RELAX = "CMD_RELAX"
     CMD_WORKING_TIME = "CMD_WORKING_TIME"
-    def __init__(self):
-        pass
+    
 
-cmd = COMMAND()
+
 
 class PCA9685:
 
@@ -743,27 +767,6 @@ class Control:
             AB[:, i] = pos + rot_mat * footpoint_struc[:, i] - body_struc[:, i]
         return (AB)
     
-control = Control()
-
-class DogCommands(Node):
-    def __init__(self):
-        super().__init__('dog_commands')
-        self.subscriptions = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
-
-    def dog_callback(self, msg):
-        x = msg.linar.x
-        y = msg.angular.z
-        
-        if x >= 0.3:
-            control.forWard()
-        if x <= -0.3:
-            control.backWard()
-        if y >=0.3:
-            control.turnLeft()
-        if y <= -0.3:
-            control.turnRight()
-        if x == 0.0 and y == 0.0:
-            control.relax()
 
 
 def main(args=Node):
