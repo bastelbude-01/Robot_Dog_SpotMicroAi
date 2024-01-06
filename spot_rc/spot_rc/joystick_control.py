@@ -4,7 +4,7 @@ from geometry_msgs.msg import Twist
 
 from Control import *
 
-control = Control()
+control=Control()
 
 class DogCommands(Node):
     def __init__(self):
