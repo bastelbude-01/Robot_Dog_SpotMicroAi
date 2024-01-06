@@ -1,7 +1,9 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from ament_index_python.packages import get_package_share_directory
 
+import os
 import time
 import math
 import smbus
@@ -11,17 +13,13 @@ import numpy as np
 from mpu6050 import mpu6050
 
 
-
-control = Control()
-cmd = COMMAND()
-
 class DogCommands(Node):
     def __init__(self):
         super().__init__('dog_commands')
-        self.subscriptions = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
+        self.subscription = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
 
     def dog_callback(self, msg):
-        x = msg.linar.x
+        x = msg.linear.x
         y = msg.angular.z
         
         if x >= 0.3:
@@ -59,6 +57,7 @@ class COMMAND:
     CMD_WORKING_TIME = "CMD_WORKING_TIME"
     
 
+cmd = COMMAND()
 
 
 class PCA9685:
@@ -327,7 +326,8 @@ class IMU:
         self.yaw = yaw
         return self.pitch,self.roll,self.yaw
 
-class Control:
+class Control:   
+
     def __init__(self):
         self.imu=IMU()
         self.servo=Servo()
@@ -340,7 +340,8 @@ class Control:
         self.move_timeout = 0
         self.order = ['','','','','']
         self.point = [[0, 99, 10], [0, 99, 10], [0, 99, -10], [0, 99, -10]]
-        self.calibration_point = self.readFromTxt('point')
+        self.points = os.path.join(get_package_share_directory("spot_rc"), "spot_rc", "point.txt")
+        self.calibration_point = self.readFromTxt(self.points)
         self.angle = [[90,0,0],[90,0,0],[90,0,0],[90,0,0]]
         self.calibration_angle=[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
         self.relax_flag=True
@@ -350,7 +351,7 @@ class Control:
         self.calibration()
         self.relax(True)
     def readFromTxt(self,filename):
-        file1 = open(filename + ".txt", "r")
+        file1 = open(self.points, "r") #open(filename + ".txt", "r")
         list_row = file1.readlines()
         list_source = []
         for i in range(len(list_row)):
@@ -363,7 +364,7 @@ class Control:
         return list_source
 
     def saveToTxt(self,list, filename):
-        file2 = open(filename + '.txt', 'w')
+        file2 = open(self.points, "w") #open(filename + '.txt', 'w')
         for i in range(len(list)):
             for j in range(len(list[i])):
                 file2.write(str(list[i][j]))
@@ -767,9 +768,10 @@ class Control:
             AB[:, i] = pos + rot_mat * footpoint_struc[:, i] - body_struc[:, i]
         return (AB)
     
+control = Control()
 
 
-def main(args=Node):
+def main(args=None):
     rclpy.init(args=args)
 
     node_ = DogCommands()
