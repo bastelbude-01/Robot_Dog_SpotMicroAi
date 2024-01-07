@@ -275,6 +275,7 @@ class IMU:
         gyro_data['z']=sum_gyro_z
         
         return accel_data,gyro_data
+    
     def imuUpdate(self):
         accel_data = self.sensor.get_accel_data()    
         gyro_data = self.sensor.get_gyro_data() 
@@ -342,7 +343,7 @@ class Control:
         self.point = [[0, 99, 10], [0, 99, 10], [0, 99, -10], [0, 99, -10]]
         self.points = os.path.join(get_package_share_directory("spot_rc"), "spot_rc", "point.txt")
         self.calibration_point = self.readFromTxt(self.points)
-        self.angle = [[90,0,0],[90,0,0],[90,0,0],[90,0,0]]
+        self.angle = [[90,0,0],[90,0,0],[80,0,0],[90,0,0]]
         self.calibration_angle=[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
         self.relax_flag=True
         self.balance_flag=False
@@ -351,7 +352,7 @@ class Control:
         self.calibration()
         self.relax(True)
     def readFromTxt(self,filename):
-        file1 = open(self.points, "r") #open(filename + ".txt", "r")
+        file1 = open(self.points) #open(filename + ".txt", "r")
         list_row = file1.readlines()
         list_source = []
         for i in range(len(list_row)):
