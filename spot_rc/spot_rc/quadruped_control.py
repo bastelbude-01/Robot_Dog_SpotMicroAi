@@ -21,6 +21,7 @@ class DogCommands(Node):
         self.subscription = self.create_subscription(Joy,'/joy',self.joy_callback,10)
 
         self.body_heigth = 0
+        self.speed = 8
 
     def dog_callback(self, msg):
         x = msg.linear.x
@@ -36,8 +37,8 @@ class DogCommands(Node):
             control.turnRight()
         if x == 0.0 and y == 0.0:
             control.relax()
-        else:
-            control.stop()
+        #else:
+        #    control.stop()
 
     def joy_callback(self, msg):
         # Check if the message has enough buttons
@@ -78,7 +79,7 @@ class DogCommands(Node):
                 self.speed = max(self.speed - 1, 0)
                 self.get_logger().info("Speed beträgt %d " %self.speed)
 
-            elif axis_6_value == 1:
+            if axis_6_value == 1:
                 self.body_heigth = min(self.body_heigth + 1, 150)
                 control.upAndDown(self.body_heigth)
                 self.get_logger().info("Körper Höhe beträgt %d " %self.body_heigth)

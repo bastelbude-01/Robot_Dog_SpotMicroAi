@@ -27,7 +27,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'spot_rc = spot_rc.joystick_control:main'
+            'spot_rc = spot_rc.joystick_control:main',
+            'quadruped = spot_rc.quadruped_control:main'
         ],
     },
 )
