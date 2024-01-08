@@ -343,7 +343,7 @@ class Control:
         self.point = [[0, 99, 10], [0, 99, 10], [0, 99, -10], [0, 99, -10]]
         self.points = os.path.join(get_package_share_directory("spot_rc"), "spot_rc", "point.txt")
         self.calibration_point = self.readFromTxt(self.points)
-        self.angle = [[90,0,0],[90,0,0],[80,0,0],[90,0,0]]
+        self.angle = [[90,0,0],[90,0,0],[85,0,0],[90,0,0]]
         self.calibration_angle=[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
         self.relax_flag=True
         self.balance_flag=False

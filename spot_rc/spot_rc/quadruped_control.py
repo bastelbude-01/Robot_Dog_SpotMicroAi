@@ -1,30 +1,403 @@
- # -*- coding: utf-8 -*-
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+from ament_index_python.packages import get_package_share_directory
+
+import os
 import time
 import math
 import smbus
 import copy
 import threading
-from IMU import *
-from PID import *
 import numpy as np
-from Servo import *
-from Command import COMMAND as cmd
+from mpu6050 import mpu6050
 
-class Control:
+
+class DogCommands(Node):
+    def __init__(self):
+        super().__init__('dog_commands')
+        self.subscription = self.create_subscription(Twist, '/spot_go', self.dog_callback, 10)
+        self.subscription = self.create_subscription(Joy,'/joy',self.joy_callback,10)
+
+        self.body_heigth = 0
+
+    def dog_callback(self, msg):
+        x = msg.linear.x
+        y = msg.angular.z
+        
+        if x >= 0.3:
+            control.forWard()
+        if x <= -0.3:
+            control.backWard()
+        if y >=0.3:
+            control.turnLeft()
+        if y <= -0.3:
+            control.turnRight()
+        if x == 0.0 and y == 0.0:
+            control.relax()
+        else:
+            control.stop()
+
+    def joy_callback(self, msg):
+        # Check if the message has enough buttons
+#        if len(msg.buttons) >= 4:
+#            button_A = msg.buttons[0]
+#            button_B = msg.buttons[1]
+#            button_X = msg.buttons[2]
+#            button_Y = msg.buttons[3]
+
+            # Handle button presses and publish corresponding values on /LEDs topic
+#            if button_A == 1:
+#                self.case_(1)
+#            elif button_B == 1:
+#                self.case_(0)
+#            elif button_X == 1:
+#                self.case_(2)
+#            elif button_Y == 1:
+#                self.case_(3)
+            
+            axis_3_value = msg.axes[3]
+            axis_4_value = msg.axes[4]
+
+            if axis_3_value >= 0.3:
+                control.setpLeft()
+            if axis_3_value <= -0.3:
+                control.setpRight()
+
+
+
+            # Handle servo control based on axes 6 and 7
+            axis_6_value = msg.axes[6]
+            axis_7_value = msg.axes[7]
+
+            if axis_7_value == 1:
+                self.speed = min(self.speed + 1, 10)
+                self.get_logger().info("Speed beträgt %d " %self.speed)
+            elif axis_7_value == -1:
+                self.speed = max(self.speed - 1, 0)
+                self.get_logger().info("Speed beträgt %d " %self.speed)
+
+            elif axis_6_value == 1:
+                self.body_heigth = min(self.body_heigth + 1, 150)
+                control.upAndDown(self.body_heigth)
+                self.get_logger().info("Körper Höhe beträgt %d " %self.body_heigth)
+            elif axis_6_value == -1:
+                self.body_heigth = max(self.body_heigth - 1, 0)
+                control.upAndDown(self.body_heigth)
+                self.get_logger().info("Körper Höhe beträgt %d " %self.body_heigth)
+
+
+class COMMAND:
+    CMD_MOVE_STOP = "CMD_MOVE_STOP"
+    CMD_MOVE_FORWARD = "CMD_MOVE_FORWARD" 
+    CMD_MOVE_BACKWARD = "CMD_MOVE_BACKWARD"
+    CMD_MOVE_LEFT = "CMD_MOVE_LEFT"
+    CMD_MOVE_RIGHT = "CMD_MOVE_RIGHT"
+    CMD_TURN_LEFT = "CMD_TURN_LEFT"
+    CMD_TURN_RIGHT = "CMD_TURN_RIGHT"
+    CMD_BUZZER = "CMD_BUZZER"
+    CMD_LED_MOD = "CMD_LED_MOD"
+    CMD_LED = "CMD_LED"
+    CMD_BALANCE = "CMD_BALANCE"
+    CMD_SONIC = "CMD_SONIC"
+    CMD_HEIGHT = "CMD_HEIGHT"
+    CMD_HORIZON = "CMD_HORIZON"
+    CMD_HEAD = "CMD_HEAD"
+    CMD_CALIBRATION = "CMD_CALIBRATION"
+    CMD_POWER = "CMD_POWER"
+    CMD_ATTITUDE = "CMD_ATTITUDE"
+    CMD_RELAX = "CMD_RELAX"
+    CMD_WORKING_TIME = "CMD_WORKING_TIME"
+    
+
+cmd = COMMAND()
+
+
+class PCA9685:
+
+  # Registers/etc.
+  __SUBADR1            = 0x02
+  __SUBADR2            = 0x03
+  __SUBADR3            = 0x04
+  __MODE1              = 0x00
+  __PRESCALE           = 0xFE
+  __LED0_ON_L          = 0x06
+  __LED0_ON_H          = 0x07
+  __LED0_OFF_L         = 0x08
+  __LED0_OFF_H         = 0x09
+  __ALLLED_ON_L        = 0xFA
+  __ALLLED_ON_H        = 0xFB
+  __ALLLED_OFF_L       = 0xFC
+  __ALLLED_OFF_H       = 0xFD
+
+  def __init__(self, address=0x40, debug=False):
+    self.bus = smbus.SMBus(1)
+    self.address = address
+    self.debug = debug
+    self.write(self.__MODE1, 0x00)
+    
+  def write(self, reg, value):
+    "Writes an 8-bit value to the specified register/address"
+    self.bus.write_byte_data(self.address, reg, value)
+      
+  def read(self, reg):
+    "Read an unsigned byte from the I2C device"
+    result = self.bus.read_byte_data(self.address, reg)
+    return result
+    
+  def setPWMFreq(self, freq):
+    "Sets the PWM frequency"
+    prescaleval = 25000000.0    # 25MHz
+    prescaleval /= 4096.0       # 12-bit
+    prescaleval /= float(freq)
+    prescaleval -= 1.0
+    prescale = math.floor(prescaleval + 0.5)
+
+
+    oldmode = self.read(self.__MODE1);
+    newmode = (oldmode & 0x7F) | 0x10        # sleep
+    self.write(self.__MODE1, newmode)        # go to sleep
+    self.write(self.__PRESCALE, int(math.floor(prescale)))
+    self.write(self.__MODE1, oldmode)
+    time.sleep(0.005)
+    self.write(self.__MODE1, oldmode | 0x80)
+
+  def setPWM(self, channel, on, off):
+    "Sets a single PWM channel"
+    self.write(self.__LED0_ON_L+4*channel, on & 0xFF)
+    self.write(self.__LED0_ON_H+4*channel, on >> 8)
+    self.write(self.__LED0_OFF_L+4*channel, off & 0xFF)
+    self.write(self.__LED0_OFF_H+4*channel, off >> 8)
+  def setMotorPwm(self,channel,duty):
+    self.setPWM(channel,0,duty)
+  def setServoPulse(self, channel, pulse):
+    "Sets the Servo Pulse,The PWM frequency must be 50HZ"
+    pulse = pulse*4096/20000        #PWM frequency is 50HZ,the period is 20000us
+    self.setPWM(channel, 0, int(pulse))
+
+class Servo:
+    def __init__(self):
+        self.angleMin=18
+        self.angleMax=162
+        self.pwm = PCA9685(address=0x40, debug=True)   
+        self.pwm.setPWMFreq(50)               # Set the cycle frequency of PWM
+    #Convert the input angle to the value of pca9685
+    def map(self,value,fromLow,fromHigh,toLow,toHigh):
+        return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow
+    def setServoAngle(self,channel, angle):
+        if angle < self.angleMin:
+            angle = self.angleMin
+        elif angle >self.angleMax:
+            angle=self.angleMax
+        date=self.map(angle,0,180,102,512)
+        #print(date,date/4096*0.02)
+        self.pwm.setPWM(channel, 0, int(date))
+
+class Incremental_PID:
+    ''' PID controller'''
+    def __init__(self,P=0.0,I=0.0,D=0.0):
+        self.setPoint = 0.0
+        self.Kp = P
+        self.Ki = I
+        self.Kd = D
+        self.last_error = 0.0
+        self.P_error = 0.0
+        self.I_error = 0.0
+        self.D_error = 0.0
+        self.I_saturation = 10.0
+        self.output = 0.0
+
+    def PID_compute(self,feedback_val):
+        error = self.setPoint - feedback_val
+        self.P_error = self.Kp * error
+        self.I_error += error 
+        self.D_error = self.Kd * (error - self.last_error)
+        if (self.I_error < -self.I_saturation ):
+            self.I_error = -self.I_saturation
+        elif (self.I_error > self.I_saturation):
+            self.I_error = self.I_saturation
+        self.output = self.P_error + (self.Ki * self.I_error) + self.D_error
+        self.last_error = error
+        return self.output
+
+    def setKp(self,proportional_gain):
+        self.Kp = proportional_gain
+
+    def setKi(self,integral_gain):
+        self.Ki = integral_gain
+
+    def setKd(self,derivative_gain):
+        self.Kd = derivative_gain
+
+    def setI_saturation(self,saturation_val):
+        self.I_saturation = saturation_val
+
+class Kalman_filter:
+    def __init__(self,Q,R):
+        self.Q = Q
+        self.R = R
+        self.P_k_k1 = 1
+        self.Kg = 0
+        self.P_k1_k1 = 1
+        self.x_k_k1 = 0
+        self.ADC_OLD_Value = 0
+        self.Z_k = 0
+        self.kalman_adc_old=0
+        
+    def kalman(self,ADC_Value):
+        self.Z_k = ADC_Value
+        if (abs(self.kalman_adc_old-ADC_Value)>=60):
+            self.x_k1_k1= ADC_Value*0.400 + self.kalman_adc_old*0.600
+        else:
+            self.x_k1_k1 = self.kalman_adc_old;
+        self.x_k_k1 = self.x_k1_k1
+        self.P_k_k1 = self.P_k1_k1 + self.Q
+        self.Kg = self.P_k_k1/(self.P_k_k1 + self.R)
+        kalman_adc = self.x_k_k1 + self.Kg * (self.Z_k - self.kalman_adc_old)
+        self.P_k1_k1 = (1 - self.Kg)*self.P_k_k1
+        self.P_k_k1 = self.P_k1_k1
+        self.kalman_adc_old = kalman_adc
+        return kalman_adc
+
+class IMU:
+    def __init__(self):
+        self.Kp = 100 
+        self.Ki = 0.002 
+        self.halfT = 0.001 
+
+        self.q0 = 1
+        self.q1 = 0
+        self.q2 = 0
+        self.q3 = 0
+
+        self.exInt = 0
+        self.eyInt = 0
+        self.ezInt = 0
+        self.pitch = 0
+        self.roll =0
+        self.yaw = 0
+        
+        self.sensor = mpu6050(address=0x68)                    
+        self.sensor.set_accel_range(mpu6050.ACCEL_RANGE_2G)   
+        self.sensor.set_gyro_range(mpu6050.GYRO_RANGE_250DEG)  
+        
+        self.kalman_filter_AX =  Kalman_filter(0.001,0.1)
+        self.kalman_filter_AY =  Kalman_filter(0.001,0.1)
+        self.kalman_filter_AZ =  Kalman_filter(0.001,0.1)
+
+        self.kalman_filter_GX =  Kalman_filter(0.001,0.1)
+        self.kalman_filter_GY =  Kalman_filter(0.001,0.1)
+        self.kalman_filter_GZ =  Kalman_filter(0.001,0.1)
+        
+        self.Error_value_accel_data,self.Error_value_gyro_data=self.average_filter()
+    
+    def average_filter(self):
+        sum_accel_x=0
+        sum_accel_y=0
+        sum_accel_z=0
+        
+        sum_gyro_x=0
+        sum_gyro_y=0
+        sum_gyro_z=0
+        for i in range(100):
+            accel_data = self.sensor.get_accel_data()   
+            gyro_data = self.sensor.get_gyro_data()      
+            
+            sum_accel_x+=accel_data['x']
+            sum_accel_y+=accel_data['y']
+            sum_accel_z+=accel_data['z']
+            
+            sum_gyro_x+=gyro_data['x']
+            sum_gyro_y+=gyro_data['y']
+            sum_gyro_z+=gyro_data['z']
+            
+        sum_accel_x/=100
+        sum_accel_y/=100
+        sum_accel_z/=100
+        
+        sum_gyro_x/=100
+        sum_gyro_y/=100
+        sum_gyro_z/=100
+        
+        accel_data['x']=sum_accel_x
+        accel_data['y']=sum_accel_y
+        accel_data['z']=sum_accel_z-9.8
+        
+        gyro_data['x']=sum_gyro_x
+        gyro_data['y']=sum_gyro_y
+        gyro_data['z']=sum_gyro_z
+        
+        return accel_data,gyro_data
+    
+    def imuUpdate(self):
+        accel_data = self.sensor.get_accel_data()    
+        gyro_data = self.sensor.get_gyro_data() 
+        ax=self.kalman_filter_AX.kalman(accel_data['x']-self.Error_value_accel_data['x'])
+        ay=self.kalman_filter_AY.kalman(accel_data['y']-self.Error_value_accel_data['y'])
+        az=self.kalman_filter_AZ.kalman(accel_data['z']-self.Error_value_accel_data['z'])
+        gx=self.kalman_filter_GX.kalman(gyro_data['x']-self.Error_value_gyro_data['x'])
+        gy=self.kalman_filter_GY.kalman(gyro_data['y']-self.Error_value_gyro_data['y'])
+        gz=self.kalman_filter_GZ.kalman(gyro_data['z']-self.Error_value_gyro_data['z'])
+
+        norm = math.sqrt(ax*ax+ay*ay+az*az)
+        
+        ax = ax/norm
+        ay = ay/norm
+        az = az/norm
+        
+        vx = 2*(self.q1*self.q3 - self.q0*self.q2)
+        vy = 2*(self.q0*self.q1 + self.q2*self.q3)
+        vz = self.q0*self.q0 - self.q1*self.q1 - self.q2*self.q2 + self.q3*self.q3
+        
+        ex = (ay*vz - az*vy)
+        ey = (az*vx - ax*vz)
+        ez = (ax*vy - ay*vx)
+        
+        self.exInt += ex*self.Ki
+        self.eyInt += ey*self.Ki
+        self.ezInt += ez*self.Ki
+        
+        gx += self.Kp*ex + self.exInt
+        gy += self.Kp*ey + self.eyInt
+        gz += self.Kp*ez + self.ezInt
+        
+        self.q0 += (-self.q1*gx - self.q2*gy - self.q3*gz)*self.halfT
+        self.q1 += (self.q0*gx + self.q2*gz - self.q3*gy)*self.halfT
+        self.q2 += (self.q0*gy - self.q1*gz + self.q3*gx)*self.halfT
+        self.q3 += (self.q0*gz + self.q1*gy - self.q2*gx)*self.halfT
+        
+        norm = math.sqrt(self.q0*self.q0 + self.q1*self.q1 + self.q2*self.q2 + self.q3*self.q3)
+        self.q0 /= norm
+        self.q1 /= norm
+        self.q2 /= norm
+        self.q3 /= norm
+        
+        pitch = math.asin(-2*self.q1*self.q3+2*self.q0*self.q2)*57.3
+        roll = math.atan2(2*self.q2*self.q3+2*self.q0*self.q1,-2*self.q1*self.q1-2*self.q2*self.q2+1)*57.3
+        yaw = math.atan2(2*(self.q1*self.q2 + self.q0*self.q3),self.q0*self.q0+self.q1*self.q1-self.q2*self.q2-self.q3*self.q3)*57.3
+        self.pitch = pitch
+        self.roll =roll
+        self.yaw = yaw
+        return self.pitch,self.roll,self.yaw
+
+class Control:   
+
     def __init__(self):
         self.imu=IMU()
         self.servo=Servo()
         self.pid = Incremental_PID(0.5,0.0,0.0025)
         self.speed = 8
-        self.height = 99  
+        self.height = 99    # spot : 200      default : 99
         self.timeout = 0
         self.move_flag = 0
         self.move_count = 0
         self.move_timeout = 0
         self.order = ['','','','','']
         self.point = [[0, 99, 10], [0, 99, 10], [0, 99, -10], [0, 99, -10]]
-        self.calibration_point = self.readFromTxt('point')
-        self.angle = [[90,0,0],[90,0,0],[90,0,0],[90,0,0]]
+        self.points = os.path.join(get_package_share_directory("spot_rc"), "spot_rc", "point.txt")
+        self.calibration_point = self.readFromTxt(self.points)
+        self.angle = [[90,0,0],[90,0,0],[85,0,0],[90,0,0]]
         self.calibration_angle=[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
         self.relax_flag=True
         self.balance_flag=False
@@ -33,7 +406,7 @@ class Control:
         self.calibration()
         self.relax(True)
     def readFromTxt(self,filename):
-        file1 = open(filename + ".txt", "r")
+        file1 = open(self.points) #open(filename + ".txt", "r")
         list_row = file1.readlines()
         list_source = []
         for i in range(len(list_row)):
@@ -46,7 +419,7 @@ class Control:
         return list_source
 
     def saveToTxt(self,list, filename):
-        file2 = open(filename + '.txt', 'w')
+        file2 = open(self.points, "w") #open(filename + '.txt', 'w')
         for i in range(len(list)):
             for j in range(len(list[i])):
                 file2.write(str(list[i][j]))
@@ -54,7 +427,7 @@ class Control:
             file2.write('\n')
         file2.close()
         
-    def coordinateToAngle(self,x,y,z,l1=10,l2=111.126,l3=120):     # 23  55  55
+    def coordinateToAngle(self,x,y,z,l1=23,l2=55,l3=55):     # 23  55  55  // 10 111 120
         a=math.pi/2-math.atan2(z,y)
         x_3=0
         x_4=l1*math.sin(a)
@@ -69,7 +442,7 @@ class Control:
         c=round(math.degrees(c))
         return a,b,c
     
-    def angleToCoordinate(self,a,b,c,l1=10,l2=111.126,l3=120):     # 23  55  55
+    def angleToCoordinate(self,a,b,c,l1=23,l2=55,l3=55):     # 23  55  55
         a=math.pi/180*a
         b=math.pi/180*b
         c=math.pi/180*c
@@ -449,10 +822,19 @@ class Control:
         for i in range(4):
             AB[:, i] = pos + rot_mat * footpoint_struc[:, i] - body_struc[:, i]
         return (AB)
-        
-if __name__=='__main__':
-    pass
+    
+control = Control()
 
-        
-   
 
+def main(args=None):
+    rclpy.init(args=args)
+
+    node_ = DogCommands()
+
+    rclpy.spin(node_)
+    DogCommands.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
