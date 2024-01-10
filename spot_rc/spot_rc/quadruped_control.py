@@ -50,7 +50,7 @@ class DogCommands(Node):
 
             # Handle button presses and publish corresponding values on /LEDs topic
             if button_A == 1:
-                cmd.CMD_RELAX()
+                cmd.CMD_RELAX
 #            elif button_B == 1:
 #                self.case_(0)
 #            elif button_X == 1:
