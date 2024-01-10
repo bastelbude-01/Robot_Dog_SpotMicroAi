@@ -72,19 +72,19 @@ class DogCommands(Node):
             axis_6_value = msg.axes[6]
             axis_7_value = msg.axes[7]
 
-            if axis_7_value == 1:
+            if axis_6_value == 1:
                 self.speed = min(self.speed + 1, 10)
                 self.get_logger().info("Speed beträgt %d " %self.speed)
-            elif axis_7_value == -1:
+            elif axis_6_value == -1:
                 self.speed = max(self.speed - 1, 0)
                 self.get_logger().info("Speed beträgt %d " %self.speed)
 
-            if axis_6_value == 1:
-                self.body_heigth = min(self.body_heigth + 1, 150)
+            if axis_7_value == 1:
+                self.body_heigth = min(self.body_heigth - 1, 150)
                 control.upAndDown(self.body_heigth)
                 self.get_logger().info("Körper Höhe beträgt %d " %self.body_heigth)
-            elif axis_6_value == -1:
-                self.body_heigth = max(self.body_heigth - 1, 0)
+            elif axis_7_value == -1:
+                self.body_heigth = max(self.body_heigth + 1, 0)
                 control.upAndDown(self.body_heigth)
                 self.get_logger().info("Körper Höhe beträgt %d " %self.body_heigth)
 
@@ -388,8 +388,8 @@ class Control:
         self.imu=IMU()
         self.servo=Servo()
         self.pid = Incremental_PID(0.5,0.0,0.0025)
-        self.speed = 8
-        self.height = 99    # spot : 200      default : 99
+        self.speed = 6
+        self.height = 120    # spot : 200      default : 99
         self.timeout = 0
         self.move_flag = 0
         self.move_count = 0
@@ -420,7 +420,7 @@ class Control:
         return list_source
 
     def saveToTxt(self,list, filename):
-        file2 = open(self.points, "w") #open(filename + '.txt', 'w')
+        file2 = open(self.points) #open(filename + '.txt', 'w')
         for i in range(len(list)):
             for j in range(len(list[i])):
                 file2.write(str(list[i][j]))
@@ -428,7 +428,7 @@ class Control:
             file2.write('\n')
         file2.close()
         
-    def coordinateToAngle(self,x,y,z,l1=23,l2=55,l3=55):     # 23  55  55  // 10 111 120
+    def coordinateToAngle(self,x,y,z,l1=23,l2=55,l3=55):     # 23  55  55  // 10 111 120  l1=10,l2=111,l3=120
         a=math.pi/2-math.atan2(z,y)
         x_3=0
         x_4=l1*math.sin(a)
@@ -443,7 +443,7 @@ class Control:
         c=round(math.degrees(c))
         return a,b,c
     
-    def angleToCoordinate(self,a,b,c,l1=23,l2=55,l3=55):     # 23  55  55
+    def angleToCoordinate(self,a,b,c,l1=23,l2=55,l3=55):     # 23  55  55 l1=23,l2=55,l3=55
         a=math.pi/180*a
         b=math.pi/180*b
         c=math.pi/180*c
@@ -490,13 +490,18 @@ class Control:
                 pass
         else:
             print("This coordinate point is out of the active range")
+            print(self.angle[0][0],self.angle[0][1],self.angle[0][2])
+            print(self.angle[1][0],self.angle[1][1],self.angle[1][2])
+            print(self.angle[2][0],self.angle[2][1],self.angle[2][2])
+            print(self.angle[3][0],self.angle[3][1],self.angle[3][2])
+            
     def checkPoint(self):
         flag=True
         leg_lenght=[0,0,0,0,0,0]  
         for i in range(4):
           leg_lenght[i]=math.sqrt(self.point[i][0]**2+self.point[i][1]**2+self.point[i][2]**2)
         for i in range(4         ):
-          if leg_lenght[i] > 130 or leg_lenght[i] < 25:
+          if leg_lenght[i] > 150 or leg_lenght[i] < 25:    #  <--- ?
             flag=False
         return flag
             
@@ -612,7 +617,7 @@ class Control:
             return var            
     def map(self,value,fromLow,fromHigh,toLow,toHigh):
         return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow
-    def changeCoordinates(self,move_order,X1=0,Y1=96,Z1=0,X2=0,Y2=96,Z2=0,pos=np.mat(np.zeros((3, 4)))):
+    def changeCoordinates(self,move_order,X1=0,Y1=96,Z1=0,X2=0,Y2=96,Z2=0,pos=np.mat(np.zeros((3, 4)))): # Y1 & Y2 = 96  -- Spot 220
         if move_order == 'turnLeft':  
             for i in range(2):
                 self.point[2*i][0]=((-1)**(1+i))*X1+10
