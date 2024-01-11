@@ -50,7 +50,14 @@ class DogCommands(Node):
 
             # Handle button presses and publish corresponding values on /LEDs topic
             if button_A == 1:
-                cmd.CMD_RELAX
+
+                if self.relax_flag:                    
+                    self.relax_flag=False
+                    self.relax(False)
+                else:
+                    self.relax_flag=True
+                    self.relax(True)
+                    self.order=['','','','','']
 #            elif button_B == 1:
 #                self.case_(0)
 #            elif button_X == 1:
@@ -657,20 +664,8 @@ class Control:
                 self.point[i*2][2]=Z1+((-1)**i)*10
                 self.point[i*2+1][2]=Z2+((-1)**i)*10
         self.run()
-    def forWard(self):
-        for i in range(450,89,-self.speed):
-            X1=12*math.cos(i*math.pi/180)
-            Y1=6*math.sin(i*math.pi/180)+self.height
-            X2=12*math.cos((i+180)*math.pi/180)
-            Y2=6*math.sin((i+180)*math.pi/180)+self.height
-            if Y2 > self.height:
-                Y2=self.height
-            if Y1 > self.height:
-                Y1=self.height
-            self.changeCoordinates('forWard',X1,Y1,0,X2,Y2,0)
-            #time.sleep(0.01)
     def backWard(self):
-        for i in range(90,451,self.speed):
+        for i in range(450,89,-self.speed):
             X1=12*math.cos(i*math.pi/180)
             Y1=6*math.sin(i*math.pi/180)+self.height
             X2=12*math.cos((i+180)*math.pi/180)
@@ -681,7 +676,19 @@ class Control:
                 Y1=self.height
             self.changeCoordinates('backWard',X1,Y1,0,X2,Y2,0)
             #time.sleep(0.01)
-    def turnRight(self):
+    def forWard(self):
+        for i in range(90,451,self.speed):
+            X1=12*math.cos(i*math.pi/180)
+            Y1=6*math.sin(i*math.pi/180)+self.height
+            X2=12*math.cos((i+180)*math.pi/180)
+            Y2=6*math.sin((i+180)*math.pi/180)+self.height
+            if Y2 > self.height:
+                Y2=self.height
+            if Y1 > self.height:
+                Y1=self.height
+            self.changeCoordinates('forWard',X1,Y1,0,X2,Y2,0)
+            #time.sleep(0.01)
+    def turnLeft(self):
         for i in range(0,361,self.speed):
             X1=3*math.cos(i*math.pi/180)
             Y1=8*math.sin(i*math.pi/180)+self.height
@@ -693,10 +700,10 @@ class Control:
                 Y1=self.height
             Z1=X1
             Z2=X2
-            self.changeCoordinates('turnRight',X1,Y1,Z1,X2,Y2,Z2)
+            self.changeCoordinates('turnLeft',X1,Y1,Z1,X2,Y2,Z2)
             #time.sleep(0.01)
     
-    def turnLeft(self):
+    def turnRight(self):
          for i in range(0,361,self.speed):
             X1=3*math.cos(i*math.pi/180)
             Y1=8*math.sin(i*math.pi/180)+self.height
@@ -708,7 +715,7 @@ class Control:
                 Y1=self.height
             Z1=X1
             Z2=X2
-            self.changeCoordinates('turnLeft',X1,Y1,Z1,X2,Y2,Z2)  
+            self.changeCoordinates('turnRight',X1,Y1,Z1,X2,Y2,Z2)  
             #time.sleep(0.01)
     def stop(self):
         p=[[10, self.height, 10], [10, self.height, 10], [10, self.height, -10], [10, self.height, -10]]
@@ -722,7 +729,7 @@ class Control:
                 self.point[i][1]+=p[i][1]
                 self.point[i][2]+=p[i][2]
             self.run()
-    def setpRight(self):
+    def setpLeft(self):
         for i in range(90,451,self.speed):
             Z1=10*math.cos(i*math.pi/180)
             Y1=5*math.sin(i*math.pi/180)+self.height
@@ -734,7 +741,7 @@ class Control:
                 Y2=self.height
             self.changeCoordinates('setpRight',0,Y1,Z1,0,Y2,Z2)
             #time.sleep(0.01)
-    def setpLeft(self):
+    def setpRight(self):
         for i in range(450,89,-self.speed):
             Z1=10*math.cos(i*math.pi/180)
             Y1=5*math.sin(i*math.pi/180)+self.height
