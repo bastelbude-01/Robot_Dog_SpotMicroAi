@@ -19,7 +19,9 @@
     <xacro:property name="fuss_length" value="0.14"/>   
     <xacro:property name="fuss_width" value="0.045"/>
     <xacro:property name="fuss_height" value="0.03"/>
-    <xacro:property name="fuss_ballen" value="0.015"/>
+    <xacro:property name="fuss_ballen" value="0.015"/> 
+    <xacro:property name="scale" value="0.001 0.001 0.001"/>
+
     
    
 
@@ -27,10 +29,11 @@
 
     <link name="base_link">
         <visual>
-            <origin xyz="0.0 0.0 ${body_width/2}" rpy="0.0 ${pi/2} 0.0 "/>
-            <geometry>
-                <cylinder radius="${body_height/2}" length="${body_length}"/>
-                <!--<box size="${body_length} ${body_width} ${body_height}"/> -->
+            <origin xyz="-0.013 -0.0325 0.125" rpy="0.0 0.0 ${-pi/2} "/>
+            <geometry>               
+               <cylinder radius="${body_height/2}" length="${body_length}"/>
+               <!-- <mesh filename="package://spot_description/meshes/Spot_Chassis.stl" scale="${scale}"/>
+                <box size="${body_length} ${body_width} ${body_height}"/> -->
             </geometry>    
             <material name="black"/> 
         </visual>
@@ -187,7 +190,7 @@
         <child link="front_r_bein_link"/>
         <axis xyz="0 -1 0"/>
         <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 0 0"/> 
+        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="joint_2" type="revolute">
@@ -195,7 +198,7 @@
         <child link="front_r_fuss_link"/>
         <axis xyz="0 1 0"/>
         <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.107 0.0 -0.03" rpy="0 0 0"/> 
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="rechter_fuss_F_endpoint" type="fixed">
@@ -221,16 +224,16 @@
         <parent link="front_l_schulter_link"/>
         <child link="front_l_bein_link"/>
         <axis xyz="0 -1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="joint_5" type="revolute">
         <parent link="front_l_bein_link"/>
         <child link="front_l_fuss_link"/>
         <axis xyz="0 1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.107 0.0 -0.03" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="linker_fuss_F_endpoint" type="fixed">
@@ -248,23 +251,23 @@
         <child link="heck_r_schulter_link"/>
         <axis xyz="-1 0 0"/>
         <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.132 -0.0435 ${body_width/2}" rpy="0 0 0"/>
+        <origin xyz="-0.134 -0.0435 ${body_width/2}" rpy="0 0 0"/>
     </joint>
 
     <joint name="joint_7" type="revolute">
         <parent link="heck_r_schulter_link"/>
         <child link="heck_r_bein_link"/>
         <axis xyz="0 -1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="joint_8" type="revolute">
         <parent link="heck_r_bein_link"/>
         <child link="heck_r_fuss_link"/>
         <axis xyz="0 1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.107 0.0 -0.03" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="rechter_fuss_H_endpoint" type="fixed">
@@ -282,23 +285,23 @@
         <child link="heck_l_schulter_link"/>
         <axis xyz="1 0 0"/>
         <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.132 0.0435 ${body_width/2}" rpy="0 0 0"/>
+        <origin xyz="-0.134 0.0435 ${body_width/2}" rpy="0 0 0"/>
     </joint>
 
     <joint name="joint_10" type="revolute">
         <parent link="heck_l_schulter_link"/>
         <child link="heck_l_bein_link"/>
         <axis xyz="0 -1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="joint_11" type="revolute">
         <parent link="heck_l_bein_link"/>
         <child link="heck_l_fuss_link"/>
         <axis xyz="0 1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
-        <origin xyz="-0.107 0.0 -0.03" rpy="0 0 0"/> 
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
     <joint name="linker_fuss_H_endpoint" type="fixed">
