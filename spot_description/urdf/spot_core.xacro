@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    
+    <xacro:property name="body_length" value="0.22"/>
+    <xacro:property name="body_width" value="0.12"/>
+    <xacro:property name="body_height" value="0.1"/>
+
+    <xacro:property name="shoulder_length" value="0.043"/>   
+    <xacro:property name="shoulder_width" value="0.038"/>
+    <xacro:property name="shoulder_height" value="0.057"/>
+
+    <xacro:property name="bein_length" value="0.1"/>   
+    <xacro:property name="bein_width" value="0.05"/>
+    <xacro:property name="bein_height" value="0.03"/>
+
+    <xacro:property name="fuss_length" value="0.14"/>   
+    <xacro:property name="fuss_width" value="0.045"/>
+    <xacro:property name="fuss_height" value="0.03"/>
+    <xacro:property name="fuss_ballen" value="0.015"/> 
+    <xacro:property name="scale" value="0.001 0.001 0.001"/>
+
+    
+   
+
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="-0.013 -0.0325 0.125" rpy="0.0 ${pi/2} 0.0"/>
+            <geometry>               
+               <cylinder radius="${body_height/2}" length="${body_length}"/>
+               <!-- <mesh filename="package://spot_description/meshes/Spot_Chassis.stl" scale="${scale}"/>
+                <box size="${body_length} ${body_width} ${body_height}"/> -->
+            </geometry>    
+            <material name="black"/> 
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${body_width/2}" rpy="0.0 ${pi/2} 0.0 "/>
+            <geometry>
+                <cylinder radius="${body_height/2}" length="${body_length}"/>
+                <!--<box size="${body_length} ${body_width} ${body_height}"/> -->
+            </geometry> 
+        </collision>
+        <xacro:cylinder_inertia m="0.5" r="${body_height/2}" h="${body_length}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
+
+    </link>
+
+    <joint name="virtuel_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0.0 0.0 0.275" rpy="0.0 0.0 0.0"/>
+    </joint>    
+
+
+        <!-- Schulter body-->
+    <xacro:macro name="schulter" params="prefix">
+        <link name="${prefix}_schulter_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${shoulder_length} ${shoulder_width} ${shoulder_height}"/>
+            </geometry>  
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${shoulder_length} ${shoulder_width} ${shoulder_height}"/>
+            </geometry> 
+        </collision> 
+        <xacro:box_inertia m="0.1" l="${shoulder_length}" w="${shoulder_width}" h="${shoulder_height}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
+
+    </link>
+
+    </xacro:macro>
+
+    <xacro:schulter prefix="front_r" />    
+    <xacro:schulter prefix="front_l" />
+
+    <xacro:schulter prefix="heck_r" />
+    <xacro:schulter prefix="heck_l" />
+
+
+        <!-- Bein body -->
+    <xacro:macro name="bein" params="prefix">
+        <link name="${prefix}_bein_link">
+        <visual>
+            <origin xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${bein_length}  ${bein_width} ${bein_height}"/>
+            </geometry>            
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${bein_length}  ${bein_width} ${bein_height}"/>
+            </geometry>
+        </collision>
+        <xacro:box_inertia m="0.1" l="${bein_length}" w="${bein_width}" h="${bein_height}"
+                           xyz="0 0 0" rpy="0 0 0"/>
+
+    </link>
+
+    </xacro:macro>
+
+    <xacro:bein prefix="front_r" />    
+    <xacro:bein prefix="front_l" />
+
+    <xacro:bein prefix="heck_r" />
+    <xacro:bein prefix="heck_l" /> 
+
+        <!-- Fuss body -->
+    <xacro:macro name="fuss" params="prefix">
+        <link name="${prefix}_fuss_link">
+        <visual>
+            <origin xyz="0.055 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${fuss_length}  ${fuss_width} ${fuss_height}"/>
+            </geometry>     
+            <material name="black"/>       
+        </visual>
+        <collision>
+            <origin xyz="0.055 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${fuss_length}  ${fuss_width} ${fuss_height}"/>
+            </geometry> 
+        </collision>
+        <xacro:box_inertia m="0.1" l="${fuss_length}" w="${fuss_width}" h="${fuss_height}"
+                           xyz="0 0 0" rpy="0 0 0"/>
+
+    </link>
+
+    </xacro:macro>
+
+    <xacro:fuss prefix="front_r" />    
+    <xacro:fuss prefix="front_l" />
+
+    <xacro:fuss prefix="heck_r" />
+    <xacro:fuss prefix="heck_l" />
+
+
+
+        <!-- Fuss endpoint -->
+    <xacro:macro name="fussb" params="prefix">
+        <link name="${prefix}_fuss_ballen_link">
+        <visual>
+            <origin xyz="-0.015 0.0 0.0" rpy="${pi/2} 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${fuss_ballen}" length="${fuss_width}"/>
+            </geometry>     
+            <material name="black"/>       
+        </visual>
+        <collision>
+            <origin xyz="-0.015 0.0 0.0" rpy="${pi/2} 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${fuss_ballen}" length="${fuss_width}"/>
+            </geometry> 
+        </collision>
+        <xacro:cylinder_inertia m="0.01" r="${fuss_ballen}" h="${fuss_width}"
+                           xyz="0 0 0" rpy="0 0 0"/> 
+
+    </link>
+
+    </xacro:macro>
+
+    <xacro:fussb prefix="front_r" />    
+    <xacro:fussb prefix="front_l" />
+
+    <xacro:fussb prefix="heck_r" />
+    <xacro:fussb prefix="heck_l" /> 
+
+
+    <!-- JOINTS-->
+
+    <!-- TRANSMISSION -->
+    <xacro:macro name="default_transmission" params="number">
+        <transmission name="transmission_${number}" >
+            <plugin>transmission_interface/SimpleTransmission</plugin>
+            <actuator name="motor_${number}" roll="actuator1"/>
+            <joint name="joint_${number}" roll="joint1">
+                <mechanical_reduction>1.0</mechanical_reduction>
+
+            </joint>
+        </transmission>
+    </xacro:macro>
+
+    
+        <!-- Front Rechts-->
+        
+    <joint name="joint_0" type="revolute">
+        <parent link="base_link"/>
+        <child link="front_r_schulter_link"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.132 -0.0435 ${body_width/2}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="joint_1" type="revolute">
+        <parent link="front_r_schulter_link"/>
+        <child link="front_r_bein_link"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="joint_2" type="revolute">
+        <parent link="front_r_bein_link"/>
+        <child link="front_r_fuss_link"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="rechter_fuss_F_endpoint" type="fixed">
+        <parent link="front_r_fuss_link"/>
+        <child link="front_r_fuss_ballen_link"/>
+        <origin xyz="0.14 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+
+
+
+        <!-- Front Links-->
+
+    <joint name="joint_3" type="revolute">
+        <parent link="base_link"/>
+        <child link="front_l_schulter_link"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.132 0.0435 ${body_width/2}" rpy="0 0 0"/>
+    </joint>   
+
+    <joint name="joint_4" type="revolute">
+        <parent link="front_l_schulter_link"/>
+        <child link="front_l_bein_link"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="joint_5" type="revolute">
+        <parent link="front_l_bein_link"/>
+        <child link="front_l_fuss_link"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="linker_fuss_F_endpoint" type="fixed">
+        <parent link="front_l_fuss_link"/>
+        <child link="front_l_fuss_ballen_link"/>
+        <origin xyz="0.14 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+
+        <!-- Heck Rechts-->
+
+    <joint name="joint_6" type="revolute">
+        <parent link="base_link"/>
+        <child link="heck_r_schulter_link"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.134 -0.0435 ${body_width/2}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="joint_7" type="revolute">
+        <parent link="heck_r_schulter_link"/>
+        <child link="heck_r_bein_link"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="joint_8" type="revolute">
+        <parent link="heck_r_bein_link"/>
+        <child link="heck_r_fuss_link"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="rechter_fuss_H_endpoint" type="fixed">
+        <parent link="heck_r_fuss_link"/>
+        <child link="heck_r_fuss_ballen_link"/>
+        <origin xyz="0.14 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+
+        <!-- Heck Links-->
+
+    <joint name="joint_9" type="revolute">
+        <parent link="base_link"/>
+        <child link="heck_l_schulter_link"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.134 0.0435 ${body_width/2}" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="joint_10" type="revolute">
+        <parent link="heck_l_schulter_link"/>
+        <child link="heck_l_bein_link"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="0.0 ${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="joint_11" type="revolute">
+        <parent link="heck_l_bein_link"/>
+        <child link="heck_l_fuss_link"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
+        <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
+    </joint>
+
+    <joint name="linker_fuss_H_endpoint" type="fixed">
+        <parent link="heck_l_fuss_link"/>
+        <child link="heck_l_fuss_ballen_link"/>
+        <origin xyz="0.14 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+
+    <xacro:default_transmission number="0"/>
+    <xacro:default_transmission number="1"/>
+    <xacro:default_transmission number="2"/>
+
+    <xacro:default_transmission number="3"/>
+    <xacro:default_transmission number="4"/>    
+    <xacro:default_transmission number="5"/>
+
+    <xacro:default_transmission number="6"/>
+    <xacro:default_transmission number="7"/>
+    <xacro:default_transmission number="8"/>
+    
+    <xacro:default_transmission number="9"/>
+    <xacro:default_transmission number="10"/>
+    <xacro:default_transmission number="11"/>
+
+    
+    
+</robot>
