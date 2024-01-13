@@ -4,10 +4,13 @@ controller_manager:
 
     fr_leg_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+
     fl_leg_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+
     hr_leg_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+
     hl_leg_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
@@ -18,14 +21,15 @@ controller_manager:
 fr_leg_controller:
   ros__parameters:
     joints:
-      joint_0
-      joint_1
-      joint_2
+      - joint_0
+      - joint_1
+      - joint_2
 
     command_interfaces:
-      -position
+      - position
+
     state_interface:
-      -position
+      - position
     
     open_loop_control: true
     allow_integration_in_goal_trajectory: true
@@ -33,14 +37,15 @@ fr_leg_controller:
 fl_leg_controller:
   ros__parameters:
     joints:
-      joint_3
-      joint_4
-      joint_5
+      - joint_3
+      - joint_4
+      - joint_5
     
     command_interfaces:
-      -position
+      - position
+
     state_interface:
-      -position
+      - position
 
     open_loop_control: true
     allow_integration_in_goal_trajectory: true
@@ -48,14 +53,15 @@ fl_leg_controller:
 hr_leg_controller:
   ros__parameters:
     joints:
-      joint_6
-      joint_7
-      joint_8
+      - joint_6
+      - joint_7
+      - joint_8
 
     command_interfaces:
-      -position
+      - position
+      
     state_interface:
-      -position
+      - position
 
     open_loop_control: true
     allow_integration_in_goal_trajectory: true
@@ -63,14 +69,15 @@ hr_leg_controller:
 hl_leg_controller:
   ros__parameters:
     joints:
-      joint_9
-      joint_10
-      joint_11
+      - joint_9
+      - joint_10
+      - joint_11
 
     command_interfaces:
-      -position
+      - position
+
     state_interface:
-      -position
+      - position
 
     open_loop_control: true
     allow_integration_in_goal_trajectory: true

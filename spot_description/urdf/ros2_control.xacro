@@ -5,30 +5,30 @@
 
     <ros2_control name="RobotSystem" type="system">
         <hardware>
-            <plugin> gazebo_ros2_control/GazeboSystem </plugin>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
         </hardware>
 
 
         <joint name="joint_0">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
         
         <joint name="joint_1">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
 
         <joint name="joint_2">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
@@ -37,24 +37,24 @@
 
         <joint name="joint_3">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
         
         <joint name="joint_4">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
 
         <joint name="joint_5">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
@@ -63,24 +63,24 @@
 
         <joint name="joint_6">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
         
         <joint name="joint_7">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
 
         <joint name="joint_8">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
@@ -89,24 +89,24 @@
 
         <joint name="joint_9">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
         
         <joint name="joint_10">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>
 
         <joint name="joint_11">
             <command_interface name="position">
-                <param name="min">${-PI/2}</param>
-                <param name="max">${PI/2}</param>
+                <param name="min">${-PI/4}</param>
+                <param name="max">${PI/4}</param>
             </command_interface>
             <state_interface name="position" />
         </joint>

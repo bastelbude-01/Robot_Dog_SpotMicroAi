@@ -202,7 +202,7 @@
         <parent link="front_r_schulter_link"/>
         <child link="front_r_bein_link"/>
         <axis xyz="0 -1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
         <origin xyz="0.0 -${shoulder_width/2 + bein_width/2 + 0.003} -0.01" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
@@ -210,7 +210,7 @@
         <parent link="front_r_bein_link"/>
         <child link="front_r_fuss_link"/>
         <axis xyz="0 1 0"/>
-        <limit lower="0" upper="${pi/2}" velocity="50.0" effort="1000.0"/>
+        <limit lower="${-pi/4}" upper="${pi/4}" velocity="50.0" effort="1000.0"/>
         <origin xyz="-0.107 0.0 0.03" rpy="0 ${-pi/2} 0"/> 
     </joint>
 
