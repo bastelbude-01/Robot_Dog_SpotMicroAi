@@ -28,11 +28,11 @@ fr_leg_controller:
     command_interfaces:
       - position
 
-    state_interface:
+    state_interfaces:
       - position
     
     open_loop_control: true
-    allow_integration_in_goal_trajectory: true
+    allow_integration_in_goal_trajectories: true
 
 fl_leg_controller:
   ros__parameters:
@@ -44,11 +44,11 @@ fl_leg_controller:
     command_interfaces:
       - position
 
-    state_interface:
+    state_interfaces:
       - position
 
     open_loop_control: true
-    allow_integration_in_goal_trajectory: true
+    allow_integration_in_goal_trajectories: true
 
 hr_leg_controller:
   ros__parameters:
@@ -60,11 +60,11 @@ hr_leg_controller:
     command_interfaces:
       - position
       
-    state_interface:
+    state_interfaces:
       - position
 
     open_loop_control: true
-    allow_integration_in_goal_trajectory: true
+    allow_integration_in_goal_trajectories: true
 
 hl_leg_controller:
   ros__parameters:
@@ -76,8 +76,8 @@ hl_leg_controller:
     command_interfaces:
       - position
 
-    state_interface:
+    state_interfaces:
       - position
 
     open_loop_control: true
-    allow_integration_in_goal_trajectory: true
+    allow_integration_in_goal_trajectories: true
