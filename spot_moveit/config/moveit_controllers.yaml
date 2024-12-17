@@ -1,10 +1,11 @@
 moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
 
 moveit_simple_controller_manager:
-  - fr_leg_controller
-  - fl_leg_controller
-  - hr_leg_controller
-  - hl_leg_controller
+  controller_names:
+    - fr_leg_controller
+    - fl_leg_controller
+    - hr_leg_controller
+    - hl_leg_controller
 
   fr_leg_controller:
     action_ns: follow_joint_trajectory
