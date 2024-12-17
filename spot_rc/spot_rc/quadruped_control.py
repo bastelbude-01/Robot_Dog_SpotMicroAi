@@ -42,22 +42,15 @@ class DogCommands(Node):
 
     def joy_callback(self, msg):
         # Check if the message has enough buttons
-        if len(msg.buttons) >= 1:           
-            button_A = msg.buttons[0]
+#        if len(msg.buttons) >= 1:           
+#            button_A = msg.buttons[0]
 #            button_B = msg.buttons[1]
 #            button_X = msg.buttons[2]
 #            button_Y = msg.buttons[3]
 
             # Handle button presses and publish corresponding values on /LEDs topic
-            if button_A == 1:
+            # if button_A == 1:
 
-                if self.relax_flag:                    
-                    self.relax_flag=False
-                    self.relax(False)
-                else:
-                    self.relax_flag=True
-                    self.relax(True)
-                    self.order=['','','','','']
 #            elif button_B == 1:
 #                self.case_(0)
 #            elif button_X == 1:
@@ -402,7 +395,7 @@ class Control:
         self.move_count = 0
         self.move_timeout = 0
         self.order = ['','','','','']
-        self.point = [[0, 99, 10], [0, 99, 10], [0, 99, -10], [0, 99, -10]]
+        self.point = [[-16, 87, 0], [-10, 87, -1], [1, 87, 0], [-6, 87, 5]]
         self.points = os.path.join(get_package_share_directory("spot_rc"), "spot_rc", "point.txt")
         self.calibration_point = self.readFromTxt(self.points)
         self.angle = [[90,0,0],[90,0,0],[90,0,0],[90,0,0]]
