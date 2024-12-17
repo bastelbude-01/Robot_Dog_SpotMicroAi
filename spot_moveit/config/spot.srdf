@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot name="spot_quadruped">
+
+    <!-- GROUPS -->
+    <group name="fr_leg">
+        <joint name="joint_0"/>
+        <joint name="joint_1"/>
+        <joint name="joint_2"/>        
+    </group>
+
+    <group name="fl_leg">
+        <joint name="joint_3"/>
+        <joint name="joint_4"/>
+        <joint name="joint_5"/>
+    </group>
+    
+    <group name="hr_leg">
+        <joint name="joint_6"/>
+        <joint name="joint_7"/>
+        <joint name="joint_8"/>        
+    </group>
+
+    <group name="hl_leg">
+        <joint name="joint_9"/>
+        <joint name="joint_10"/>
+        <joint name="joint_11"/>
+    </group>
+
+    <!-- Home value per joint in group-->
+
+    <group_state name="home" group="fr_leg">
+        <joint name="joint_0" value="0"/>
+        <joint name="joint_1" value="0"/>
+        <joint name="joint_2" value="0"/>
+    </group_state>
+
+    <group_state name="home" group="fl_leg">
+        <joint name="joint_3" value="0"/>
+        <joint name="joint_4" value="0"/>
+        <joint name="joint_5" value="0"/>
+    </group_state>
+
+    <group_state name="home" group="hr_leg">
+        <joint name="joint_6" value="0"/>
+        <joint name="joint_7" value="0"/>
+        <joint name="joint_8" value="0"/>
+    </group_state>
+
+    <group_state name="home" group="hl_leg">
+        <joint name="joint_9" value="0"/>
+        <joint name="joint_10" value="0"/>
+        <joint name="joint_11" value="0"/>
+    </group_state>
+
+
+    <disable_collision link1="" link2="" reason="Adjacent"/>
+    <disable_collision link1="" link2="" reason="Never"/>
+
+
+</robot>

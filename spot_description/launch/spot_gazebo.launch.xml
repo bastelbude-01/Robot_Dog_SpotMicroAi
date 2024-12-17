@@ -12,7 +12,7 @@
 
     <node pkg="gazebo_ros" exec="spawn_entity.py"
         args="-topic robot_description -entity spot_quadruped " />
-
+<!-- 
     <include file="$(find-pkg-share spot_description)/launch/display_spot.launch.xml" />
-
+-->
 </launch>
